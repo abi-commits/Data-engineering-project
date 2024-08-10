@@ -1,0 +1,1 @@
+SELECT * FROM {{SOURCE('destination_db','flims')}}
