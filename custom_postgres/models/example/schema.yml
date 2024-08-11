@@ -1,5 +1,4 @@
 
-
 version: 2
 
 models:
@@ -35,8 +34,7 @@ models:
 
   - name: actors
     description: "This table contains details about actors."
-    columns:
-      - name: actor_id
+    columns:      - name: actor_id
         description: "Unique identifier for the actor."
         tests:
           - unique

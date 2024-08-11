@@ -4,7 +4,7 @@ services:
   source_postgres:
     image: postgres:latest
     ports:
-      - "5433:5432"
+      - "5435:5432"
     networks:
       - elt_networks
     environment:  
@@ -35,6 +35,27 @@ services:
     depends_on:
       - source_postgres
       - destination_postgres
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.4.7
+    command:
+      [
+        "run",
+        "--profiles-dir",
+        "/root",
+        "--project-dir",
+        "/dbt",
+        "--full-refresh"
+      ]
+    networks:
+      - elt_networks
+    volumes:
+      - ./custom_postgres:/dbt
+      - ~/.dbt:/root
+    depends_on:
+      - elt_script
+    environment:
+      DBT_PROFILE: default
+      DBT_TARGET: dev
 
 networks:
   elt_networks:
